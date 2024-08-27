@@ -145,7 +145,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 1
-  m_FillAmount: 0.507
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -317,7 +317,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2794728127595789037
 RectTransform:
   m_ObjectHideFlags: 0
@@ -645,13 +645,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e893587a0f35461aa385ef7600e7b8ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Button>k__BackingField: {fileID: 3805828981020287567}
   countLabel: {fileID: 8170688881298350201}
   fillImage: {fileID: 6661922125348524300}
   imageCharacter: {fileID: 2793546262215796381}
+  blockImage: {fileID: 1855501445275596220}
   scaleRectTransform: {fileID: 287993130246822791}
-  scaleFactor: 1.2
-  duration: 0.24
-  ease: 28
+  scaleFactor: 1.1
+  duration: 0.2
+  ease: 13
 --- !u!1 &7616219304507686927
 GameObject:
   m_ObjectHideFlags: 0

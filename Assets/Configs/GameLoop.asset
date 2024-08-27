@@ -12,26 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83603792658745f99de8e6bf0d24ff51, type: 3}
   m_Name: GameLoop
   m_EditorClassIdentifier: 
-  wheatHarvestCycle: 30
+  wheatHarvestCycle: 20
   attackCycle: 90
   eatsCycle: 70
   countWarriorsToWin: 100
   countPeasantsToWin: 200
   startCountPeasant: 2
-  startCountWarriorsOne: 0
+  startCountWarriorsOne: 2
   startCountWarriorsTwo: 0
-  startCountWheat: 0
+  startCountWheat: 8
   peasantImage: {fileID: 2800000, guid: 2d78586ccfc0fbc4bb12ddcc838e2a6c, type: 3}
   peasantGivesAmountWheat: 2
   peasantEatsWheat: 1
   timeToGetNewPeasant: 15
-  currencyNewPeasant: 4
+  currencyNewPeasant: 2
   warriorOneImage: {fileID: 2800000, guid: cc0ac173f97e2e24a8c18626733609e4, type: 3}
   warriorOneEatsWheat: 3
   timeToGetNewWarriorOne: 15
-  currencyNewWarriorOne: 6
+  currencyNewWarriorOne: 4
   warriorTwoImage: {fileID: 2800000, guid: d081efc7254307c478f58c95ee0e7015, type: 3}
   warriorTwoEatsWheat: 3
   timeToGetNewWarriorTwo: 20
-  currencyNewWarriorTwo: 8
+  currencyNewWarriorTwo: 6
   addedCountEnemyNextWave: 4

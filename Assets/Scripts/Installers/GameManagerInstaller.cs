@@ -5,6 +5,6 @@ public class GameManagerInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.BindInterfacesAndSelfTo<GameManager>().AsSingle().NonLazy();
+        Container.BindInterfacesAndSelfTo<GameManager>().AsCached().NonLazy();
     }
 }
