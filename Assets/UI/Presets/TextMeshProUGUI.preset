@@ -75,7 +75,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_text
-    value: Resume Game
+    value: New Text
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_isRightToLeft
@@ -84,12 +84,11 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_fontAsset
     value: 
-    objectReference: {fileID: 11400000, guid: 0354d04d9577bc84cbd83a8ac61f7fd1, type: 2}
+    objectReference: {fileID: 11400000, guid: 0153eaae2bab7ab4fbab8a85ff1cbd96, type: 2}
   - target: {fileID: 0}
     propertyPath: m_sharedMaterial
     value: 
-    objectReference: {fileID: 16792329366599674, guid: 0354d04d9577bc84cbd83a8ac61f7fd1,
-      type: 2}
+    objectReference: {fileID: 2100000, guid: 1beec8b02ab7cc440bc962d8fc19a4c1, type: 2}
   - target: {fileID: 0}
     propertyPath: m_fontSharedMaterials.Array.size
     value: 0
@@ -104,19 +103,19 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_fontColor32.rgba
-    value: 4281479730
+    value: 4294967295
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_fontColor.r
-    value: 0.19607843
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_fontColor.g
-    value: 0.19607843
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_fontColor.b
-    value: 0.19607843
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_fontColor.a
@@ -228,7 +227,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_fontSizeBase
-    value: 40
+    value: 36
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_fontWeight
@@ -240,7 +239,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_fontSizeMin
-    value: 20
+    value: 18
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_fontSizeMax
@@ -248,11 +247,11 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_fontStyle
-    value: 16
+    value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_HorizontalAlignment
-    value: 2
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_VerticalAlignment
@@ -308,7 +307,7 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_enableKerning
-    value: 0
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_enableExtraPadding
