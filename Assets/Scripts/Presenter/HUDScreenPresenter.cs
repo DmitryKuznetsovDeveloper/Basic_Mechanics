@@ -5,110 +5,119 @@ using UnityEngine;
 using View;
 using Zenject;
 
-public sealed class HUDScreenPresenter : MonoBehaviour, ITickable
+namespace Presenter
 {
-    [TitleGroup("Indicators", alignment: TitleAlignments.Centered, boldTitle: true)] [SerializeField]
-    private BaseHudIndicatorView indicatorWheat;
-
-    [SerializeField] private BaseHudIndicatorView indicatorPeasants;
-    [SerializeField] private BaseHudIndicatorView indicatorWarriors;
-    [SerializeField] private BaseHudIndicatorView indicatorEatsWheat;
-    [SerializeField] private BaseHudIndicatorView indicatorEnemy;
-
-    [TitleGroup("Buttons", alignment: TitleAlignments.Centered, boldTitle: true)] [SerializeField]
-    private BaseButtonView buttonPeasant;
-
-    [SerializeField] private BaseButtonView buttonWarriorOne;
-    [SerializeField] private BaseButtonView buttonWarriorTwo;
-
-    private GameManager _gameManager;
-    private GameLoop _gameLoop;
-
-    [Inject]
-    public void Construct(GameManager gameManager, GameLoop gameLoop)
+    public sealed class HUDScreenPresenter : MonoBehaviour, ITickable
     {
-        _gameManager = gameManager;
-        _gameLoop = gameLoop;
-    }
+        [TitleGroup("Indicators", alignment: TitleAlignments.Centered, boldTitle: true)] [SerializeField]
+        private BaseHudIndicatorView indicatorWheat;
 
-    public void Tick()
-    {
-        indicatorWheat.SetTimeFillImage(_gameLoop.wheatHarvestCycle);
-        indicatorEatsWheat.SetTimeFillImage(_gameLoop.eatsCycle);
-        indicatorEnemy.SetTimeFillImage(_gameLoop.attackCycle);
-    }
+        [SerializeField] private BaseHudIndicatorView indicatorPeasants;
+        [SerializeField] private BaseHudIndicatorView indicatorWarriors;
+        [SerializeField] private BaseHudIndicatorView indicatorEatsWheat;
+        [SerializeField] private BaseHudIndicatorView indicatorEnemy;
+        
+        [TitleGroup("Buttons", alignment: TitleAlignments.Centered, boldTitle: true)] 
+        [SerializeField] private BaseButtonView buttonPeasant;
+        [SerializeField] private BaseButtonView buttonWarriorOne;
+        [SerializeField] private BaseButtonView buttonWarriorTwo;
+        [SerializeField] private ButtonExitButtonView buttonExit;
 
-    private void OnEnable()
-    {
-        _gameManager.OnChangeWheat += SetWheatLabel;
-        _gameManager.OnChangeWheat += SetWheatEatsLabel;
-        _gameManager.OnChangeWheat += CheckEnoughMoney;
+        private GameManager _gameManager;
+        private GameLoop _gameLoop;
 
-        _gameManager.OnChangeWarriors += SetEnemyLabel;
-        _gameManager.OnChangeWarriors += SetWarriorsLabel;
-        _gameManager.OnChangeWarriors += SetWarriorsFill;
+        [Inject]
+        public void Construct(GameManager gameManager, GameLoop gameLoop)
+        {
+            _gameManager = gameManager;
+            _gameLoop = gameLoop;
+        }
 
-        _gameManager.OnChangePeasant += SetPeasantsLabel;
-        _gameManager.OnChangePeasant += SetPeasantsFill;
+        public void Tick()
+        {
+            indicatorWheat.SetTimeFillImage(_gameLoop.wheatHarvestCycle);
+            indicatorEatsWheat.SetTimeFillImage(_gameLoop.eatsCycle);
+            indicatorEnemy.SetTimeFillImage(_gameLoop.attackCycle);
+        }
+        
 
-        buttonPeasant.Button.onClick.AddListener(OnClickButtonPeasants);
-        buttonPeasant.SetLabel(_gameLoop.currencyNewPeasant.ToString());
-        buttonPeasant.SetImageCharacter(_gameLoop.peasantImage);
+        private void OnEnable()
+        {
+            _gameManager.OnChangeWheat += SetWheatLabel;
+            _gameManager.OnChangeWheat += SetWheatEatsLabel;
+            _gameManager.OnChangeWheat += CheckEnoughMoney;
 
-        buttonWarriorOne.Button.onClick.AddListener(OnClickButtonWarriorOne);
-        buttonWarriorOne.SetLabel(_gameLoop.currencyNewWarriorOne.ToString());
-        buttonWarriorOne.SetImageCharacter(_gameLoop.warriorOneImage);
+            _gameManager.OnChangeWarriors += SetEnemyLabel;
+            _gameManager.OnChangeWarriors += SetWarriorsLabel;
+            _gameManager.OnChangeWarriors += SetWarriorsFill;
 
-        buttonWarriorTwo.Button.onClick.AddListener(OnClickButtonWarriorTwo);
-        buttonWarriorTwo.SetLabel(_gameLoop.currencyNewWarriorTwo.ToString());
-        buttonWarriorTwo.SetImageCharacter(_gameLoop.warriorTwoImage);
-    }
+            _gameManager.OnChangePeasant += SetPeasantsLabel;
+            _gameManager.OnChangePeasant += SetPeasantsFill;
 
-    private void OnDisable()
-    {
-        _gameManager.OnChangeWheat -= SetWheatLabel;
-        _gameManager.OnChangeWheat -= SetWheatEatsLabel;
-        _gameManager.OnChangeWheat -= CheckEnoughMoney;
+            buttonPeasant.Button.onClick.AddListener(OnClickButtonPeasants);
+            buttonPeasant.SetLabel(_gameLoop.currencyNewPeasant.ToString());
+            buttonPeasant.SetImageCharacter(_gameLoop.peasantImage);
 
-        _gameManager.OnChangeWarriors -= SetEnemyLabel;
-        _gameManager.OnChangeWarriors -= SetWarriorsLabel;
-        _gameManager.OnChangeWarriors -= SetWarriorsFill;
+            buttonWarriorOne.Button.onClick.AddListener(OnClickButtonWarriorOne);
+            buttonWarriorOne.SetLabel(_gameLoop.currencyNewWarriorOne.ToString());
+            buttonWarriorOne.SetImageCharacter(_gameLoop.warriorOneImage);
 
-        _gameManager.OnChangePeasant -= SetPeasantsLabel;
-        _gameManager.OnChangePeasant -= SetPeasantsFill;
+            buttonWarriorTwo.Button.onClick.AddListener(OnClickButtonWarriorTwo);
+            buttonWarriorTwo.SetLabel(_gameLoop.currencyNewWarriorTwo.ToString());
+            buttonWarriorTwo.SetImageCharacter(_gameLoop.warriorTwoImage);
+            
+            buttonExit.Button.onClick.AddListener(OnClickButtonExit);
+        }
 
-        buttonPeasant.Button.onClick.RemoveListener(OnClickButtonPeasants);
-        buttonWarriorOne.Button.onClick.RemoveListener(OnClickButtonWarriorOne);
-        buttonWarriorTwo.Button.onClick.RemoveListener(OnClickButtonWarriorTwo);
-    }
+        private void OnDisable()
+        {
+            _gameManager.OnChangeWheat -= SetWheatLabel;
+            _gameManager.OnChangeWheat -= SetWheatEatsLabel;
+            _gameManager.OnChangeWheat -= CheckEnoughMoney;
 
-    private void SetWheatLabel() => indicatorWheat.SetLabel(_gameManager.AmountWheat.ToString());
-    private void SetWheatEatsLabel() => indicatorEatsWheat.SetLabel(_gameManager.AmountEatsWheat.ToString());
-    private void SetPeasantsLabel() => indicatorPeasants.SetLabel(_gameManager.AmountPeasant.ToString());
+            _gameManager.OnChangeWarriors -= SetEnemyLabel;
+            _gameManager.OnChangeWarriors -= SetWarriorsLabel;
+            _gameManager.OnChangeWarriors -= SetWarriorsFill;
 
-    private void SetPeasantsFill() =>
-        indicatorPeasants.SetFillImage(_gameManager.AmountPeasant, _gameLoop.countPeasantsToWin);
+            _gameManager.OnChangePeasant -= SetPeasantsLabel;
+            _gameManager.OnChangePeasant -= SetPeasantsFill;
 
-    private void SetWarriorsLabel() => indicatorWarriors.SetLabel(_gameManager.AmountWarriors.ToString());
+            buttonPeasant.Button.onClick.RemoveListener(OnClickButtonPeasants);
+            buttonWarriorOne.Button.onClick.RemoveListener(OnClickButtonWarriorOne);
+            buttonWarriorTwo.Button.onClick.RemoveListener(OnClickButtonWarriorTwo);
+            
+            buttonExit.Button.onClick.RemoveListener(OnClickButtonExit);
+        }
 
-    private void SetWarriorsFill() =>
-        indicatorWarriors.SetFillImage(_gameManager.AmountWarriors, _gameLoop.countWarriorsToWin);
+        private void SetWheatLabel() => indicatorWheat.SetLabel(_gameManager.AmountWheat.ToString());
+        private void SetWheatEatsLabel() => indicatorEatsWheat.SetLabel(_gameManager.AmountEatsWheat.ToString());
+        private void SetPeasantsLabel() => indicatorPeasants.SetLabel(_gameManager.AmountPeasant.ToString());
 
-    private void SetEnemyLabel() => indicatorEnemy.SetLabel(_gameManager.AmountEnemy.ToString());
+        private void SetPeasantsFill() =>
+            indicatorPeasants.SetFillImage(_gameManager.AmountPeasant, _gameLoop.countPeasantsToWin);
 
-    private void OnClickButtonPeasants() =>
-        buttonPeasant.ButtonAnimOnClick(_gameLoop.currencyNewPeasant, _gameManager.BuyPeasant);
+        private void SetWarriorsLabel() => indicatorWarriors.SetLabel(_gameManager.AmountWarriors.ToString());
 
-    private void OnClickButtonWarriorOne() =>
-        buttonWarriorOne.ButtonAnimOnClick(_gameLoop.currencyNewWarriorOne, _gameManager.BuyWarriorOne);
+        private void SetWarriorsFill() =>
+            indicatorWarriors.SetFillImage(_gameManager.AmountWarriors, _gameLoop.countWarriorsToWin);
 
-    private void OnClickButtonWarriorTwo() =>
-        buttonWarriorTwo.ButtonAnimOnClick(_gameLoop.currencyNewWarriorTwo, _gameManager.BuyWarriorTwo);
+        private void SetEnemyLabel() => indicatorEnemy.SetLabel(_gameManager.AmountEnemy.ToString());
 
-    private void CheckEnoughMoney()
-    {
-        buttonPeasant.SwitchEnableButton(_gameManager.AmountWheat - _gameLoop.currencyNewPeasant >= 0);
-        buttonWarriorOne.SwitchEnableButton(_gameManager.AmountWheat - _gameLoop.currencyNewWarriorOne >= 0);
-        buttonWarriorTwo.SwitchEnableButton(_gameManager.AmountWheat - _gameLoop.currencyNewWarriorTwo >= 0);
+        private void OnClickButtonPeasants() =>
+            buttonPeasant.ButtonAnimOnClick(_gameLoop.currencyNewPeasant, _gameManager.BuyPeasant);
+
+        private void OnClickButtonWarriorOne() =>
+            buttonWarriorOne.ButtonAnimOnClick(_gameLoop.currencyNewWarriorOne, _gameManager.BuyWarriorOne);
+
+        private void OnClickButtonWarriorTwo() =>
+            buttonWarriorTwo.ButtonAnimOnClick(_gameLoop.currencyNewWarriorTwo, _gameManager.BuyWarriorTwo);
+
+        private void OnClickButtonExit() =>  buttonExit.ButtonAnimOnClick(_gameManager.ExitGame);
+        private void CheckEnoughMoney()
+        {
+            buttonPeasant.SwitchEnableButton(_gameManager.AmountWheat - _gameLoop.currencyNewPeasant >= 0);
+            buttonWarriorOne.SwitchEnableButton(_gameManager.AmountWheat - _gameLoop.currencyNewWarriorOne >= 0);
+            buttonWarriorTwo.SwitchEnableButton(_gameManager.AmountWheat - _gameLoop.currencyNewWarriorTwo >= 0);
+        }
     }
 }

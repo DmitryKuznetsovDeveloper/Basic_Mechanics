@@ -17,6 +17,7 @@ namespace View
         [SerializeField] private float scaleFactor;
         [SerializeField] private float duration;
         [SerializeField] private Ease ease;
+        [SerializeField] private AudioSource audioClick;
 
         public void SetLabel(string value) => countLabel.text = value;
         public void SetImageCharacter(Texture2D texture2D)
@@ -33,17 +34,21 @@ namespace View
             blockImage.enabled = !value;
         }
         
-        public void ButtonAnimOnClick(float durationFill, Action action) => scaleRectTransform
-            .DOScale(scaleFactor, duration)
-            .SetLoops(2, LoopType.Yoyo).SetEase(ease).OnComplete(() =>
-            {
-                Button.interactable = false;
-                    fillImage.DOFillAmount(0.99f, durationFill).OnComplete(() =>
+        public void ButtonAnimOnClick(float durationFill, Action action)
+        {
+            audioClick.Play();
+            Button.interactable = false;
+            scaleRectTransform
+                .DOScale(scaleFactor, duration)
+                .SetLoops(2, LoopType.Yoyo).SetEase(ease).OnComplete(() =>
+                {
+                    fillImage.DOFillAmount(1f, durationFill).OnComplete(() =>
                     {
                         action?.Invoke();
                         fillImage.fillAmount = 0f;
                         Button.interactable = true;
                     });
-            });
+                });
+        }
     }
 }

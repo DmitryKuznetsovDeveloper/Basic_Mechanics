@@ -23,10 +23,10 @@ namespace View
         public void SetTimeFillImage(float time)
         {
               fillImage.fillAmount += 1 / time * Time.deltaTime;
-                if(fillImage.fillAmount >= 0.99f)
+                if(fillImage.fillAmount >= 1f)
                     fillImage.fillAmount = 0f;
         }
 
-        public void SetFillImage(float currentFill, float MaxFill) => fillImage.DOFillAmount(currentFill / MaxFill,duration);
+        public void SetFillImage(float currentFill, float maxFill) => fillImage.DOFillAmount(currentFill / maxFill,duration);
     }
 }

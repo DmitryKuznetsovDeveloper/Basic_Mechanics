@@ -36,5 +36,8 @@ namespace DataConfigs
 
         [TitleGroup("Enemy", alignment: TitleAlignments.Centered, boldTitle: true)]
         public int addedCountEnemyNextWave;
+        
+        [TitleGroup("Restart Time", alignment: TitleAlignments.Centered, boldTitle: true)]
+        public float restartTime;
     }
 }

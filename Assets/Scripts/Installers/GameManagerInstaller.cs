@@ -1,10 +1,14 @@
 using Model;
 using Zenject;
 
-public class GameManagerInstaller : MonoInstaller
+namespace Installers
 {
-    public override void InstallBindings()
+    public class GameManagerInstaller : MonoInstaller
     {
-        Container.BindInterfacesAndSelfTo<GameManager>().AsCached().NonLazy();
+        public override void InstallBindings()
+        {
+            Container.BindInterfacesAndSelfTo<GameManager>().AsCached().NonLazy();
+            Container.BindInterfacesAndSelfTo<RestartGame>().AsCached().NonLazy();
+        }
     }
 }

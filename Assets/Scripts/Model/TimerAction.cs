@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 namespace Model
 {
@@ -29,7 +28,6 @@ namespace Model
                 _currentTime -= deltaTime;
                 return false;
             }
-            Debug.Log("Action");
             _action?.Invoke();
             _currentTime = _timerTime;
             return true;

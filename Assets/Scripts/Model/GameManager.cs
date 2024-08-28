@@ -9,12 +9,12 @@ namespace Model
     {
         public event Action OnWin;
         public event Action OnLose;
+        public event Action OnAttack;
         public event Action OnChangeWheat;
         public event Action OnChangePeasant;
         public event Action OnChangeWarriors;
-        public bool IsWin { get; private set; }
         public bool IsLose { get; private set; }
-
+        public bool IsWin { get; private set; }
         public int AmountWheat { get; private set; }
         public int AmountEatsWheat { get; private set; }
         public int AmountPeasant { get; private set; }
@@ -46,7 +46,7 @@ namespace Model
             AmountEatsWheat = (AmountPeasant * _gameLoop.peasantEatsWheat) +
                               (AmountWarriors * _gameLoop.warriorOneEatsWheat);
             AmountEnemy = _gameLoop.addedCountEnemyNextWave;
-
+            
             OnChangeWheat?.Invoke();
             OnChangePeasant?.Invoke();
             OnChangeWarriors?.Invoke();
@@ -54,14 +54,12 @@ namespace Model
 
         public void Tick()
         {
-            CheckWin();
-            CheckLose();
             //Таймеры
             _timerActionWheat.IsTimerFinished(Time.deltaTime);
             _timerActionAttack.IsTimerFinished(Time.deltaTime);
             _timerActionEats.IsTimerFinished(Time.deltaTime);
         }
-
+        public void ExitGame() => Application.Quit();
         /// <summary>
         /// Что происходит после завершения цикла сбора урожая.
         /// </summary>
@@ -78,6 +76,11 @@ namespace Model
         private void EatsCycle()
         {
             AmountWheat -= AmountEatsWheat;
+            if (AmountWheat < 0 )
+            {
+                IsLose = true;
+                OnLose?.Invoke();
+            }
             HowMuchEats();
             OnChangeWheat?.Invoke();
         }
@@ -95,8 +98,12 @@ namespace Model
         /// </summary>
         private void AttackCycle()
         {
-            if (AmountWarriors < AmountEnemy) 
+            OnAttack?.Invoke();
+            if (AmountWarriors < AmountEnemy)
+            {
+                IsLose = true;
                 OnLose?.Invoke();
+            }
             AmountWarriors -= AmountEnemy;
             AmountEnemy += _gameLoop.addedCountEnemyNextWave;
             OnChangeWarriors?.Invoke();
@@ -110,6 +117,7 @@ namespace Model
             AmountPeasant++;
             AmountWheat -= _gameLoop.currencyNewPeasant;
             HowMuchEats();
+            CheckWin();
             OnChangeWheat?.Invoke();
             OnChangePeasant?.Invoke();
         }
@@ -122,6 +130,7 @@ namespace Model
             AmountWarriors++;
             AmountWheat -= _gameLoop.currencyNewWarriorOne;
             HowMuchEats();
+            CheckWin();
             OnChangeWheat?.Invoke();
             OnChangeWarriors?.Invoke();
         }
@@ -131,6 +140,7 @@ namespace Model
             AmountWarriors++;
             AmountWheat -= _gameLoop.currencyNewWarriorTwo;
             HowMuchEats();
+            CheckWin();
             OnChangeWheat?.Invoke();
             OnChangeWarriors?.Invoke();
         }
@@ -141,16 +151,10 @@ namespace Model
         private void CheckWin()
         {
             if (AmountPeasant >= _gameLoop.countPeasantsToWin && AmountWarriors >= _gameLoop.countWarriorsToWin)
+            {
+                IsWin = true;
                 OnWin?.Invoke();
-        }
-
-        /// <summary>
-        /// Проверка на проигрыш
-        /// </summary>
-        private void CheckLose()
-        {
-            if (AmountWheat < 0)
-                OnLose?.Invoke();
+            }
         }
     }
 }
