@@ -1,3 +1,5 @@
+using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -25,6 +27,8 @@ public class GameLoader
 
     public void ResetCurrentScene() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
+    public IEnumerator ResetCurrentSceneByTime(float time) => ResetSceneByTime(time);
+
     public void GameExit()
     {
 #if UNITY_EDITOR
@@ -32,5 +36,11 @@ public class GameLoader
 #else
             Application.Quit();
 #endif
+    }
+
+    private IEnumerator ResetSceneByTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        ResetCurrentScene();
     }
 }

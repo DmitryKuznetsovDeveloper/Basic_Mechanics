@@ -1,5 +1,6 @@
 ﻿using Controllers;
 using Data;
+using DefaultNamespace;
 using Input;
 using UnityEngine;
 using Zenject;
@@ -20,6 +21,9 @@ namespace Installers
             
             //Controller
             Container.BindInterfacesAndSelfTo<CharacterMoveController>().AsSingle().WithArguments(rigidBodyCharacter,speedMove).NonLazy();
+            
+            Container.Bind<HealthComponent>().FromComponentInHierarchy().AsSingle().NonLazy();
+            Container.Bind<CharacterDeathObservable>().FromComponentInHierarchy().AsSingle().NonLazy();
         }
     }
 }
